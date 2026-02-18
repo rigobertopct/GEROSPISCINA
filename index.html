@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEROS PISCINAS S.R.L. - Mantenimiento de Recintos de Agua</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-oscuro: #003A99;
+            --azul-medio: #0A47A9;
+            --celeste-claro: #9ADBE2;
+            --celeste-medio: #6EC6D1;
+            --negro: #000000;
+            --blanco: #ffffff;
+            --gradiente-azul: linear-gradient(135deg, #003A99 0%, #0A47A9 50%, #003A99 100%);
+            --gradiente-celeste: linear-gradient(135deg, #6EC6D1 0%, #9ADBE2 100%);
+            --sombra: 0 10px 30px rgba(0, 58, 153, 0.2);
+            --sombra-fuerte: 0 15px 40px rgba(0, 58, 153, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--azul-oscuro);
+            color: var(--blanco);
+            position: relative;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Animación de burbujas - más sutiles */
+        .bubbles-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(154, 219, 226, 0.2), rgba(110, 198, 209, 0.1));
+            animation: float 20s infinite ease-in-out;
+            box-shadow: inset 0 0 10px rgba(154, 219, 226, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            25% {
+                transform: translateY(-40px) translateX(20px) scale(1.05);
+            }
+            50% {
+                transform: translateY(20px) translateX(-30px) scale(0.95);
+            }
+            75% {
+                transform: translateY(-60px) translateX(-15px) scale(1.03);
+            }
+        }
+
+        /* Navegación - Más moderna y con mejor contraste */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0, 58, 153, 0.1);
+            border-bottom: 3px solid var(--celeste-claro);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 65px;
+            width: auto;
+            filter: drop-shadow(0 3px 5px rgba(0, 58, 153, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            color: var(--azul-oscuro);
+            text-shadow: none;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--azul-medio);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+
+        .nav-links a {
+            color: var(--azul-oscuro);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradiente-celeste);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--azul-oscuro);
+            transform: translateY(-3px);
+            box-shadow: var(--sombra);
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links a.active {
+            background: var(--gradiente-celeste);
+            color: var(--azul-oscuro);
+            box-shadow: var(--sombra);
+        }
+
+        /* Slider de pantalla completa - Imágenes más visibles */
+        .fullscreen-slider {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Overlay más sutil para que se vean mejor las imágenes */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 58, 153, 0.4), rgba(0, 58, 153, 0.6));
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            max-height: 78vh;
+            overflow-y: auto;
+            padding: 2rem 2rem 4rem;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.5) transparent;
+        }
+        .slide-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.5);
+            border-radius: 3px;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h2 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--blanco);
+            font-weight: 800;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .slide p {
+            font-size: 1.6rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: var(--blanco);
+            font-weight: 300;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        .slide-lead {
+            font-size: 1.5rem !important;
+            font-weight: 500 !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            margin-bottom: 0.8rem !important;
+        }
+        .slide-highlight {
+            margin-top: 1.2rem !important;
+            color: var(--celeste-claro) !important;
+            font-weight: 500 !important;
+        }
+        .slide-content--compact .slide p {
+            font-size: 1.4rem;
+            margin-bottom: 0.85rem;
+        }
+        .slide-content--compact .slide h2 {
+            font-size: 3.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .slide-content ul {
+            list-style: none;
+            margin: 0.5rem 0 0 0;
+            padding: 0;
+            color: var(--blanco);
+        }
+        .slide-content ul li {
+            font-size: 1.6rem;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .slide-content ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--celeste-claro);
+        }
+
+        .slogan {
+            font-size: 2.4rem !important;
+            font-weight: 700 !important;
+            color: var(--celeste-claro) !important;
+            text-shadow: 0 0 20px rgba(154, 219, 226, 0.7) !important;
+            margin-top: 1.5rem;
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+        }
+
+        .slogan::before, .slogan::after {
+            content: '★';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--celeste-claro);
+            font-size: 1.5rem;
+        }
+
+        .slogan::before {
+            left: 0;
+        }
+
+        .slogan::after {
+            right: 0;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .slider-dot.active {
+            background-color: var(--celeste-claro);
+            transform: scale(1.3);
+            box-shadow: 0 0 15px var(--celeste-claro);
+            border-color: var(--celeste-claro);
+        }
+
+        /* Secciones de contenido */
+        .section {
+            padding: 6rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section:nth-child(even) {
+            background: rgba(0, 58, 153, 0.05);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+            color: var(--blanco);
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 5px;
+            background: var(--gradiente-celeste);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--celeste-medio);
+        }
+
+        /* Servicios - Diseño de tarjetas moderno */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.8rem 2.2rem;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: var(--sombra);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            color: var(--azul-oscuro);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradiente-celeste);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--sombra-fuerte);
+        }
+
+        .service-number {
+            font-size: 5.5rem;
+            color: rgba(0, 58, 153, 0.08);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--celeste-medio);
+            margin-bottom: 1.8rem;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(110, 198, 209, 0.1);
+            border: 2px solid rgba(110, 198, 209, 0.3);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--azul-oscuro);
+            min-height: 65px;
+            line-height: 1.3;
+        }
+
+        .service-card p {
+            line-height: 1.7;
+            color: rgba(0, 58, 153, 0.8);
+            margin-bottom: 1.8rem;
+            font-size: 1.05rem;
+        }
+
+        .service-details {
+            background-color: rgba(154, 219, 226, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--celeste-medio);
+        }
+
+        .service-details h4 {
+            color: var(--azul-medio);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .service-details ul {
+            padding-left: 1.5rem;
+            color: rgba(0, 58, 153, 0.8);
+        }
+
+        .service-details li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .service-details li::before {
+            content: '✓';
+            color: var(--celeste-medio);
+            font-weight: bold;
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Quiénes somos - Diseño mejorado */
+        .about-container {
+            display: block;
+            margin-top: 2rem;
+        }
+
+        .about-text {
+            width: 100%;
+            max-width: none;
+            min-width: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3.5rem;
+            border-radius: 25px;
+            box-shadow: var(--sombra-fuerte);
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            color: var(--azul-oscuro);
+            margin: 0 auto;
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-text:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-text p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 1.8rem;
+            color: rgba(0, 58, 153, 0.9);
+        }
+
+        .about-highlight {
+            background-color: rgba(154, 219, 226, 0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--celeste-medio);
+        }
+
+        .about-highlight h3 {
+            color: var(--azul-medio);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+
+        .about-highlight ul {
+            padding-left: 1.5rem;
+            color: rgba(0, 58, 153, 0.9);
+        }
+
+        .about-highlight li {
+            margin-bottom: 0.7rem;
+            position: relative;
+        }
+
+        .about-highlight li::before {
+            content: '•';
+            color: var(--celeste-medio);
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: -1.2rem;
+            top: -0.2rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: auto;
+            max-height: 480px;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--sombra-fuerte);
+            transition: transform 0.5s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .about-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Contactos - Diseño mejorado */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3.5rem;
+            border-radius: 25px;
+            box-shadow: var(--sombra-fuerte);
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            color: var(--azul-oscuro);
+        }
+
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-info:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--celeste-medio);
+            width: 70px;
+            height: 70px;
+            background: rgba(110, 198, 209, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(110, 198, 209, 0.3);
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--azul-medio);
+        }
+
+        .contact-details p {
+            color: rgba(0, 58, 153, 0.9);
+            line-height: 1.7;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3.5rem;
+            border-radius: 25px;
+            box-shadow: var(--sombra-fuerte);
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            color: var(--azul-oscuro);
+        }
+
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-form:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-form h3 {
+            color: var(--azul-medio);
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            color: var(--azul-medio);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(110, 198, 209, 0.4);
+            border-radius: 12px;
+            color: var(--azul-oscuro);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--celeste-medio);
+            box-shadow: 0 0 0 3px rgba(110, 198, 209, 0.2);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gradiente-celeste);
+            color: var(--azul-oscuro);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(110, 198, 209, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradiente-azul);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(110, 198, 209, 0.4);
+            color: var(--blanco);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Footer - Diseño moderno */
+        footer {
+            background: var(--gradiente-azul);
+            padding: 5rem 5% 3rem;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradiente-celeste);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo-img {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .footer-logo-text h2 {
+            font-size: 1.8rem;
+            color: var(--blanco);
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .footer-logo-text p {
+            font-size: 0.9rem;
+            color: var(--celeste-claro);
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .footer-slogan {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--celeste-claro);
+            text-shadow: 0 0 15px rgba(154, 219, 226, 0.5);
+            background-color: rgba(0, 58, 153, 0.3);
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            border: 2px solid rgba(154, 219, 226, 0.3);
+            max-width: 700px;
+        }
+
+        .affiliations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            max-width: 900px;
+        }
+
+        .affiliation {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(154, 219, 226, 0.3);
+            font-weight: 600;
+            color: var(--celeste-claro);
+            transition: all 0.3s ease;
+        }
+
+        .affiliation:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--celeste-claro);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(154, 219, 226, 0.3);
+        }
+
+        .social-icons a:hover {
+            background: var(--celeste-claro);
+            color: var(--azul-oscuro);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(154, 219, 226, 0.3);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            max-width: 800px;
+            line-height: 1.6;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(154, 219, 226, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide h2 {
+                font-size: 3.2rem;
+            }
+            
+            .slide p {
+                font-size: 1.4rem;
+            }
+            
+            .slogan {
+                font-size: 2rem !important;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .slide h2 {
+                font-size: 2.8rem;
+            }
+
+            .slide p {
+                font-size: 1.3rem;
+            }
+
+            .slogan {
+                font-size: 1.8rem !important;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.2rem 5%;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .slide h2 {
+                font-size: 2.2rem;
+            }
+
+            .slide p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 3.5rem;
+            }
+
+            .about-container, .contact-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .about-text, .about-image, .contact-info, .contact-form {
+                width: 100%;
+            }
+            
+            .about-image {
+                height: 400px;
+            }
+            
+            .service-card, .about-text, .contact-info, .contact-form {
+                padding: 2.5rem 2rem;
+            }
+            
+            .section {
+                padding: 5rem 5%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .slide h2 {
+                font-size: 1.9rem;
+            }
+
+            .slogan {
+                font-size: 1.5rem !important;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.4rem;
+            }
+            
+            .logo-img {
+                height: 55px;
+            }
+
+            .service-card, .about-text, .contact-info, .contact-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .section {
+                padding: 4rem 5%;
+            }
+            
+            .footer-slogan {
+                font-size: 1.5rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .footer-logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-logo-text h2, .footer-logo-text p {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor de burbujas animadas - más sutiles -->
+    <div class="bubbles-container" id="bubbles-container"></div>
+
+    <!-- Navegación - Con mejor contraste -->
+    <nav>
+        <div class="nav-links">
+            <a href="#inicio" class="active">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#nosotros">Quiénes Somos</a>
+            <a href="#contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Slider de pantalla completa - Imágenes más visibles -->
+    <section class="fullscreen-slider" id="inicio">
+        <!-- Cada slide tiene su propia imagen y texto -->
+        <div class="slide active" style="background-image: url('images/1.jpg');">
+            <div class="slide-content slide-content--compact">
+                <h2>SISTEMA INTEGRAL DE GESTIÓN (S.I.G.)</h2>
+                <p class="slide-lead">Gestión del capital humano, calidad, mantenimiento y medio ambiente.</p>
+                <p>Potenciando la calidad de los servicios, armonizando los intereses nacionales integrados al desarrollo local. Información en tiempo real.</p>
+                <p>Aplicando la ciencia, la tecnología y la informática, apoyándonos en el uso de herramientas digitales como valor agregado.</p>
+                <p class="slide-highlight"><strong>Software (APK):</strong> Sistema de Control</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('images/2.jpg');">
+            <div class="slide-content">
+                <h2>GESTIÓN AMBIENTAL</h2>
+                <p class="slide-lead">Turismo sostenible, funcional y accesible.</p>
+                <p>Integramos el proyecto GEF-PNUD como actor clave de primera línea, incorporando la conservación de la biodiversidad y la mitigación del cambio climático en el desarrollo del turismo en Cuba.</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('images/3.jpg');">
+            <div class="slide-content">
+                <h2>MANTENIMIENTO INTEGRAL</h2>
+                <p class="slide-lead">Para recintos de agua, franja de playa y sus áreas de influencia.</p>
+                <p>Dictaminando las condiciones técnico-constructivas, higiénico-sanitarias y ambientales.</p>
+            </div>
+        </div>
+        
+        <div class="slider-nav">
+            <div class="slider-dot active" data-slide="0"></div>
+            <div class="slider-dot" data-slide="1"></div>
+            <div class="slider-dot" data-slide="2"></div>
+        </div>
+    </section>
+
+    <!-- Sección Servicios -->
+    <section id="servicios" class="section">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-container">
+            <div class="service-card">
+                <div class="service-number">1</div>
+                <div class="service-icon">
+                    <i class="fas fa-water"></i>
+                </div>
+                <h3>MANTENIMIENTO PREVENTIVO-PREDICTIVO PARA RECINTOS DE AGUA</h3>
+                <p>Servicio integral para piscinas, fuentes, espejos de agua, canales y lagos artificiales. Incluye todas las áreas de influencia: vaso, cuarto de equipos, almacén, área de playa, duchas, elementos de sombra, jardineras, baños, etc.</p>
+                <div class="service-details">
+                    <h4>Entregables:</h4>
+                    <ul>
+                        <li>Dictamen técnico con deficiencias y soluciones</li>
+                        <li>Expediente técnico con fichas técnicas</li>
+                        <li>Sistema de Control (bitácora digitalizada)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-number">2</div>
+                <div class="service-icon">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <h3>MANTENIMIENTO PREVENTIVO-PREDICTIVO PARA ZONAS DE PLAYA</h3>
+                <p>Mantenimiento integral de zonas costeras y de protección, incluyendo áreas de influencia: protección de dunas, áreas de exposición solar, duchas, elementos de sombra, puentes, pasarelas y accesos.</p>
+                <div class="service-details">
+                    <h4>Entregables:</h4>
+                    <ul>
+                        <li>Dictamen técnico con deficiencias y soluciones</li>
+                        <li>Expediente técnico con fichas técnicas</li>
+                        <li>Sistema de Control digitalizado</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-number">3</div>
+                <div class="service-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>MANTENIMIENTO DE URGENCIA PARA RECINTOS DE AGUA</h3>
+                <p>Servicio de respuesta rápida ante deterioro drástico de parámetros físico-químicos del agua. Levantamiento preliminar, diagnóstico y solución en menos de 7 días.</p>
+                <div class="service-details">
+                    <h4>Incluye:</h4>
+                    <ul>
+                        <li>Diagnóstico de causas del problema</li>
+                        <li>Plan de acciones correctivas</li>
+                        <li>Suministro de productos e implementos (opcional)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-number">4</div>
+                <div class="service-icon">
+                    <i class="fas fa-hard-hat"></i>
+                </div>
+                <h3>ACOMPAÑAMIENTO EN MANTENIMIENTO CONSTRUCTIVO</h3>
+                <p>Supervisión y control en demolición, montaje, restauración, reparación, remodelación y construcción de recintos de agua y sus áreas de influencia.</p>
+                <div class="service-details">
+                    <h4>Alcance:</h4>
+                    <ul>
+                        <li>Levantamiento preliminar y defectación detallada</li>
+                        <li>Acompañamiento en todas las fases del proyecto</li>
+                        <li>Control de calidad y cumplimiento normativo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-number">5</div>
+                <div class="service-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>COMERCIALIZACIÓN Y MONTAJE DE PRODUCTOS</h3>
+                <p>Venta e instalación de productos químicos, artículos de limpieza, accesorios, partes y piezas para equipos de recintos de agua.</p>
+                <div class="service-details">
+                    <h4>Productos:</h4>
+                    <ul>
+                        <li>Productos químicos para tratamiento de agua</li>
+                        <li>Implementos de limpieza especializados</li>
+                        <li>Partes y piezas para filtros, motobombas, dosificadores</li>
+                        <li>Accesorios y equipos completos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Quiénes Somos -->
+    <section id="nosotros" class="section">
+        <h2 class="section-title">Quiénes Somos</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <p><strong>GEROS PISCINAS S.R.L.</strong> es una Sociedad Mercantil Privada de Responsabilidad Limitada de nacionalidad cubana, con domicilio legal en Autopista a Varadero, Km 3½, municipio y provincia de Matanzas.</p>
+                
+                <div class="about-highlight">
+                    <h3>Afiliaciones y Colaboraciones:</h3>
+                    <ul>
+                        <li><strong>Afiliada al Parque Científico Tecnológico de Matanzas (CIENTEX)</strong></li>
+                        <li>Participante en el Proyecto GEF-PNUD "Turismo Sostenible"</li>
+                        <li>Colaboración con Centro de Servicios Ambientales de Matanzas (CSAM)</li>
+                        <li>Colaboración con Escuela de Hotelería y Turismo de Varadero (EHTV)</li>
+                    </ul>
+                </div>
+                
+                <p>Nos identificamos con la innovación, la inventiva y la creatividad en función de la calidad como producto final de nuestros servicios, sin perder de vista la cultura del detalle y las buenas prácticas ambientales encaminadas a la sostenibilidad.</p>
+                
+                <p>Fomentamos la gestión del turismo a todos los niveles, potenciamos el capital humano, la ciencia, la tecnología y la innovación, el cuidado y mejoramiento de las condiciones ambientales e incentivamos el encadenamiento de la producción de factura nacional.</p>
+                
+                <div class="about-highlight">
+                    <h3>Normativas y Certificaciones:</h3>
+                    <ul>
+                        <li>Ley 150/2022 "Del Sistema de los Recursos Naturales y el Medio Ambiente"</li>
+                        <li>NC 441-2006 Salud Ambiental-Piscinas</li>
+                        <li>Decreto 86/2023 Del enfrentamiento al cambio climático</li>
+                        <li>Decreto-Ley 77 "De Costas" y su Reglamento</li>
+                        <li>Certificación de Accesibilidad Universal</li>
+                        <li>Reconocimiento Playa Ambiental (CITMA-Matanzas)</li>
+                    </ul>
+                </div>
+                
+                <p><strong>Objetivo:</strong> Contribuir al fortalecimiento del sector turístico manteniendo la excelencia en la calidad de los servicios, disminuyendo consumos de productos químicos y portadores energéticos, y cumpliendo con las legislaciones y normativas cubanas alineadas con las tendencias internacionales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="section">
+        <h2 class="section-title">Nuestros Contactos</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Dirección Legal</h3>
+                        <p>Autopista a Varadero, Km 3½<br>Municipio y Provincia de Matanzas<br>Cuba</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Afiliación</h3>
+                        <p>Parque Científico Tecnológico de Matanzas<br><strong>CIENTEX</strong></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Teléfonos de Contacto</h3>
+                        <p>+53 45 1234567<br>+53 45 7654321</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Correo Electrónico</h3>
+                        <p>info@gerospiscinas.cu<br>ventas@gerospiscinas.cu</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Colaboraciones</h3>
+                        <p>Proyecto GEF-PNUD "Turismo Sostenible"<br>CSAM - Centro de Servicios Ambientales de Matanzas<br>EHTV - Escuela de Hotelería y Turismo de Varadero</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Solicite Nuestros Servicios</h3>
+                <form id="formContacto">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo / Empresa</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="servicio">Servicio de interés</label>
+                        <select id="servicio" name="servicio">
+                            <option value="">Seleccione un servicio</option>
+                            <option value="1">Mantenimiento Preventivo-Predictivo para Recintos de Agua</option>
+                            <option value="2">Mantenimiento Preventivo-Predictivo para Zonas de Playa</option>
+                            <option value="3">Mantenimiento de Urgencia</option>
+                            <option value="4">Acompañamiento en Mantenimiento Constructivo</option>
+                            <option value="5">Comercialización y Montaje de Productos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje / Consulta</label>
+                        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Enviar Solicitud</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="footer-logo-text">
+                    <h2>GEROS PISCINAS S.R.L.</h2>
+                    <p>Mantenimiento de Recintos de Agua</p>
+                </div>
+            </div>
+            <div class="footer-slogan">"Somos tu solución, somos transparencia"</div>
+            
+            <div class="affiliations">
+                <div class="affiliation">GEROS PISCINAS S.R.L.</div>
+                <div class="affiliation">Afiliada a CIENTEX</div>
+                <div class="affiliation">Proyecto GEF-PNUD Turismo Sostenible</div>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 GEROS PISCINAS S.R.L. - Sociedad Mercantil Privada de Responsabilidad Limitada. 
+                Domicilio legal: Autopista a Varadero, Km 3½, Matanzas, Cuba. 
+                Afiliada al Parque Científico Tecnológico de Matanzas (CIENTEX). 
+                Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generar burbujas animadas - más sutiles
+        function createBubbles() {
+            const container = document.getElementById('bubbles-container');
+            const bubbleCount = 20;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Tamaño aleatorio entre 30px y 120px
+                const size = Math.random() * 90 + 30;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Posición aleatoria en la pantalla
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.top = `${Math.random() * 100}%`;
+                
+                // Retraso de animación aleatorio
+                bubble.style.animationDelay = `${Math.random() * 20}s`;
+                
+                // Duración de animación aleatoria
+                const duration = Math.random() * 15 + 15;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Opacidad aleatoria
+                bubble.style.opacity = Math.random() * 0.2 + 0.05;
+                
+                container.appendChild(bubble);
+            }
+        }
+        
+        // Slider automático
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        let slideInterval;
+        
+        function showSlide(index) {
+            // Ocultar todas las slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Desactivar todos los dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Mostrar slide seleccionada
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+            
+            // Reiniciar animación del contenido
+            const slideContent = slides[index].querySelector('.slide-content');
+            slideContent.style.animation = 'none';
+            setTimeout(() => {
+                slideContent.style.animation = 'fadeInUp 1s ease 0.3s forwards';
+            }, 10);
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function startSlider() {
+            slideInterval = setInterval(nextSlide, 15000);
+        }
+        
+        function resetSlider() {
+            clearInterval(slideInterval);
+            startSlider();
+        }
+        
+        // Inicializar dots del slider
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideIndex = parseInt(this.getAttribute('data-slide'));
+                showSlide(slideIndex);
+                resetSlider();
+            });
+        });
+        
+        // Smooth scroll para enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                // Actualizar enlace activo en navegación
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Manejo del formulario de contacto
+        document.getElementById('formContacto').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Mostrar mensaje de confirmación
+            const btn = this.querySelector('.btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Enviando...';
+            btn.disabled = true;
+            
+            // Simular envío
+            setTimeout(() => {
+                alert('Gracias por su solicitud. Nos pondremos en contacto con usted en breve.');
+                this.reset();
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 1500);
+        });
+        
+        // Scroll animation
+        function checkVisibility() {
+            const elements = document.querySelectorAll('.service-card, .about-text, .about-image, .contact-info, .contact-form');
+            
+            elements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // Si el elemento está en el viewport
+                if (rect.top < windowHeight * 0.85 && rect.bottom > 0) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // Actualizar enlace activo al hacer scroll
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let currentSectionId = '';
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    currentSectionId = section.id;
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Si estamos en la parte superior, activar enlace "Inicio"
+            if (window.scrollY < 100) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#inicio') {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        }
+        
+        // Inicializar cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            createBubbles();
+            showSlide(0);
+            startSlider();
+            
+            // Verificar visibilidad al cargar la página
+            checkVisibility();
+            updateActiveNavLink();
+            
+            // Verificar visibilidad al hacer scroll
+            window.addEventListener('scroll', function() {
+                checkVisibility();
+                updateActiveNavLink();
+                
+                // Cambiar opacidad del navbar al hacer scroll
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 100) {
+                    nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                    nav.style.boxShadow = '0 5px 25px rgba(0, 58, 153, 0.15)';
+                } else {
+                    nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                    nav.style.boxShadow = '0 5px 25px rgba(0, 58, 153, 0.1)';
+                }
+            });
+        });
+        
+        // Pre-cargar imágenes para evitar problemas de visualización
+        window.addEventListener('load', function() {
+            // Asegurar que las imágenes del slider se muestren correctamente
+            const slideImages = document.querySelectorAll('.slide');
+            slideImages.forEach(slide => {
+                // Forzar repaint para asegurar la visualización
+                slide.style.opacity = '0';
+                setTimeout(() => {
+                    slide.style.opacity = '';
+                }, 10);
+            });
+        });
+    </script>
+</body>
+</html>
