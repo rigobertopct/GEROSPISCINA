@@ -1,0 +1,8 @@
+# Robots.txt para GEROS PISCINAS S.R.L.
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Sitemap (actualizar la URL cuando el sitio esté publicado)
+Sitemap: https://www.gerospiscinas.cu/sitemap.xml
